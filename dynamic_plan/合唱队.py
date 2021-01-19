@@ -1,3 +1,5 @@
+#合唱队形
+0
 while True:
     try:
         n = int(input())

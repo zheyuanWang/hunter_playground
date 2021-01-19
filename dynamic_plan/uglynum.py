@@ -3,7 +3,7 @@ class Solution:
         dp = [1]
         p2,p3,p5 = 0, 0,0
         while(n>1):
-            dp.append(min(dp[p2]*2, dp[p3]*3, dp[p5]*5))
+            dp.append(min(dp[p2]*2, dp[p3]*3, dp[p5]*5))  # 三指针循环增长
             if dp[p2]*2 ==dp[-1]:
                 p2+=1
             if dp[p3]*3 ==dp[-1]:

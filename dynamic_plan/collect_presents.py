@@ -11,7 +11,6 @@ class Solution:
                 grid[i][j]+=max(grid[i-1][j],grid[i][j-1])
         return grid[grid_x-1][grid_y-1]
 
-#执行用时： 48 ms , 在所有 Python3 提交中击败了 92.29% 的用户 内存消耗： 15.9 MB , 在所有 Python3 提交中击败了 18.07% 的用户
 
 """
 
