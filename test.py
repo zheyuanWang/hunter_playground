@@ -1,61 +1,34 @@
-while True:
-    try:
-        n = int(input())
-        dp_left = [1] * n
-        dp_right = [1] * n
-        a = list(map(int,input().split()))
+# -*- coding:utf-8 -*-
+class Solution:
+    def FindNumsAppearOnce(self, array):
+        if not array:
+            return []
+        # 对array中的数字进行异或运算
+        tmp = 0
+        for i in array:
+            tmp ^= i
+        # 获取tmp中最低位1的位置
+        idx = 0
+        while (tmp & 1) == 0:
+            tmp >>= 1
+            idx += 1
+        a = b = 0
+        for i in array:
+            if self.isBit(i, idx):
+                a ^= i
+            else:
+                b ^= i
+        return [a, b]
 
-        for i in range(n):
-            for j in range(i):
-                if a[j] < a[i] and dp_left[j]+1 > dp_left[i]:
-                    dp_left[i] = dp_left[j] + 1
-        #for i in range(n)[::-1]:
-        for i in range(len(a) - 1, -1, -1):
-            #for j in range(len(a) - 1, i, -1):
-            for j in range(i+1,n):
-                if a[i] > a[j] and dp_right[j] +1 > dp_right[i]:  # BUG:不一定需要连续递增, 可以跳位的
-                    dp_right[i] = dp_right[j] + 1
-        #print(dp_left)
-        #print(dp_right)
-        for i in range(n):
-            dp_left[i] = dp_left[i] + dp_right[i]
-        #print(dp_left)
-        print(n - max(dp_left) + 1)
-    except:
-        break
+    def isBit(self, num, idx):
+        """
+        判断num的二进制从低到高idx位是不是1
+        :param num: 数字
+        :param idx: 二进制从低到高位置
+        :return: num的idx位是否为1
+        """
+        num = num >> idx
+        return num & 1
 
-
-
-def left_max(list):
-    """计算出i这个人，包含自己，在左边符合人数的个数"""
-    res = [1] * len(list)
-    for i in range(len(list)):
-        for j in range(i):
-            if list[j] < list[i] and res[j] + 1 > res[i]:
-                res[i] = res[j] + 1
-    return res
-
-
-def right_max(list):
-    """计算出i这个人，包含自己，在右边符合人数的个数"""
-    res = [1] * len(list)
-    for i in range(len(list))[::-1]:
-        for j in range(i + 1, len(list)):
-            if list[j] < list[i] and res[j] + 1 > res[i]:
-                res[i] = res[j] + 1
-    return res
-
-
-while True:
-    try:
-        n = int(input())
-        result = list(map(int, input().split()))
-        left = left_max(result)
-        right = right_max(result)
-        sum_list = []
-        for i in range(len(left)):
-            sum_list.append(left[i] + right[i])
-        print(n - (max(sum_list) - 1))
-
-    except:
-        break
+ss = Solution()
+print(ss.FindNumsAppearOnce([11,11,12,12,3,4,55,55]))
