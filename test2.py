@@ -1,25 +1,18 @@
-n = int(input())
-x = int(input())
-in_list = list(map(int,input().split()))
-plan = [-1]*n
+def maxSlidingWindow(self, nums, k: int):
+    n = len(nums)
+    q = collections.deque()
+    for i in range(k):
+        while q and nums[i] >= nums[q[-1]]:
+            q.pop()
+        q.append(i)
 
-def check_match(plan, in_list):
-    for i in range(len(in_list)):
-        if plan[i]==in_list[i]:
-            return in_list[i]
-    return None
+    ans = [nums[q[0]]]
+    for i in range(k, n):
+        while q and nums[i] >= nums[q[-1]]:
+            q.pop()
+        q.append(i)
+        while q[0] <= i - k:
+            q.popleft()
+        ans.append(nums[q[0]])
 
-i=x
-count = 0
-while 1:
-    plan[i]=count
-    i-=1
-    count+=1
-    if i<0:
-        i = n-1
-        out = check_match(plan,in_list)
-        if out != None:
-            print(out)
-            break
-    print(plan)
-
+    return ans
